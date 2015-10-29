@@ -16,4 +16,9 @@ public class NavigationHelper extends HelperBase {
 		click(By.linkText("groups"));
 	}
 
+	public void getGroupList() {
+		driver.get(manager.baseUrl + "/addressbookv4.1.4/");
+		click(By.linkText("groups"));
+	}
+
 }

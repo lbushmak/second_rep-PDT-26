@@ -1,41 +1,36 @@
 package com.example.tests;
 
+import static org.testng.Assert.assertEquals;
+
+import java.util.Collections;
+import java.util.List;
+
 import org.testng.annotations.Test;
 
 @Test
-public class ContactCreationTests extends TestBase{
-	
-  @Test
-public void testNonEmptyContactCreation() throws Exception {
-	openMainPage();
-    initContactCreation();
-    ContactData contact = new ContactData();
-	contact.firstname = "name_1";
-	contact.lastname = "last_name_1";
-	contact.address = "address_1";
-	contact.home = "111";
-	contact.mobile  = "+777";
-	contact.work = "222";
-	contact.email = "a@b.ru";
-	contact.email2 = "a1@b.ru";
-	contact.bday = "1";
-	contact.bmonth = "January";
-	contact.byear = "1990";
-	contact.group = "new_group";
-	contact.address2 = "address_2";
-	contact.phone2 = "222";
-	fillContactForm(contact);
-    submitContactCreation();
-    returnToMainPage();
-  }
+public class ContactCreationTests extends TestBase {
 
-  @Test
-public void testEmptyContactCreation() throws Exception {
-	openMainPage();
-    initContactCreation();
-    fillContactForm(new ContactData("", "", "", "", "", "", "", "", "-", "-", "", "", "", ""));
-    submitContactCreation();
-    returnToMainPage();
-  }
+	@Test(dataProvider = "randomvalidContactGenerator")
+	public void testContactCreationwithValidData(ContactData contact) throws Exception {
+		app.getNavigationHelper().openMainPage();
+
+		// save old state
+		List<ContactData> oldList = app.getContactHelper().getContacts();
+
+		// actions
+		app.getContactHelper().initContactCreation();
+		app.getContactHelper().fillContactForm(contact);
+		app.getGroupHelper().submitContactCreation();
+		app.getGroupHelper().returnToMainPage();
+
+		// save new state
+		List<ContactData> newList = app.getContactHelper().getContacts();
+
+		// compare states
+		oldList.add(contact);
+		Collections.sort(oldList);
+		Collections.sort(newList);
+		assertEquals(newList, oldList);
+	}
+
 }
-

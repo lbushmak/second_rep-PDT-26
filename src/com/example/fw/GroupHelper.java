@@ -36,18 +36,18 @@ public class GroupHelper extends HelperBase {
 		click(By.name("submit"));
 	}
 
-	public void deleteGroup(int index) {
-		selectGroupByIndex(index);
+	public void deleteGroup(int groupIndex) {
+		selectGroupByIndex(groupIndex);
 		click(By.name("delete"));
 
 	}
 
-	private void selectGroupByIndex(int index) {
-		click(By.xpath("//input[@name='selected[]'][" + (index + 1) + "]"));
+	private void selectGroupByIndex(int groupIndex) {
+		click(By.xpath("//input[@name='selected[]'][" + (groupIndex + 1) + "]"));
 	}
 
-	public void initGroupModification(int index) {
-		selectGroupByIndex(index);
+	public void initGroupModification(int groupIndex) {
+		selectGroupByIndex(groupIndex);
 		click(By.name("edit"));
 
 	}
@@ -69,4 +69,5 @@ public class GroupHelper extends HelperBase {
 		return groups;
 
 	}
+
 }

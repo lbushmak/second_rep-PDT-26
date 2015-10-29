@@ -1,6 +1,10 @@
 package com.example.fw;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.example.tests.ContactData;
 
@@ -31,24 +35,42 @@ public class ContactHelper extends HelperBase {
 		type(By.name("phone2"), contact.phone2);
 	}
 
-	public void deleteContact(int row, int col) {
-		selectContactByIndex(row, col);
-		click(By.name("update"));
+	public void deleteContact(int contactIndex) {
+		selectContactByIndex(contactIndex);
+		click(By.xpath("(//input[@name='update'])[2]"));
 
 	}
 
-	private void selectContactByIndex(int row, int col) {
-		click(By.xpath("//*[@id='maintable']//tr[" + row + "]//td[" + col + "]"));
-		// + "[" + index + "]"));
+	private void selectContactByIndex(int contactIndex) {
+		click(By.xpath("(//img[@alt='Edit'])[" + (contactIndex + 1) + "]"));
 	}
 
-	public void initContactModification(int row, int col) {
-		selectContactByIndex(row, col);
+	public void initContactModification(int contactIndex) {
+		selectContactByIndex(contactIndex);
 	}
 
 	public void submitContactModification() {
-		click(By.name("update"));
+		click(By.xpath("(//input[@name='update'])[1]"));
 
 	}
 
+	public List<ContactData> getContacts() {
+		List<ContactData> contacts = new ArrayList<ContactData>();
+		List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
+		for (WebElement checkbox : checkboxes) {
+			ContactData contact = new ContactData();
+			String title = checkbox.getAttribute("title");
+			title = title.substring("Select (".length(), title.lastIndexOf(")"));
+			if (title.length() == 0) {
+				contact.firstname = "";
+				contact.lastname = "";
+			} else {
+				contact.firstname = title.substring(0, title.indexOf(" "));
+				contact.lastname = title.substring(title.indexOf(" ") + 1);
+			}
+			contacts.add(contact);
+		}
+		return contacts;
+
+	}
 }

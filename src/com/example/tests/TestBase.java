@@ -51,7 +51,7 @@ public class TestBase {
 	public Iterator<Object[]> randomvalidContactGenerator() {
 		List<Object[]> list = new ArrayList<Object[]>();
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 1; i++) {
 			ContactData contact = new ContactData().withFirstname(generateRandomString())
 					.withLastname(generateRandomString()).withAdress(generateRandomString())
 					.withAdress2(generateRandomString()).withEmail(generateRandomString())

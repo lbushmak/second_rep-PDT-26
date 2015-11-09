@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.example.tests.ContactData;
-import com.example.utils.SortedListOf;
+import com.example.utils.ListOf;
 
 public class ContactHelper extends HelperBase {
 
@@ -17,9 +17,9 @@ public class ContactHelper extends HelperBase {
 		super(manager);
 	}
 
-	private SortedListOf<ContactData> cachedContacts;
+	private ListOf<ContactData> cachedContacts;
 
-	public SortedListOf<ContactData> getContacts() {
+	public ListOf<ContactData> getContacts() {
 		if (cachedContacts == null) {
 			rebuildCache();
 		}
@@ -27,7 +27,7 @@ public class ContactHelper extends HelperBase {
 	}
 
 	private void rebuildCache() {
-		cachedContacts = new SortedListOf<ContactData>();
+		cachedContacts = new ListOf<ContactData>();
 		manager.navigateTo().mainPage();
 
 		List<WebElement> firstNames = driver.findElements(By.xpath("//tr[@name='entry']//td[3]"));
@@ -36,8 +36,8 @@ public class ContactHelper extends HelperBase {
 
 		for (int i = 0; i < firstNames.size(); i++) {
 			ContactData contact = new ContactData();
-			contact.lastname = lastNames.get(i).getText();
-			contact.firstname = firstNames.get(i).getText();
+			contact.setLastname(lastNames.get(i).getText());
+			contact.setFirstname(firstNames.get(i).getText());
 			cachedContacts.add(contact);
 		}
 

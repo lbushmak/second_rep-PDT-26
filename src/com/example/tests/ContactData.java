@@ -13,7 +13,7 @@ public class ContactData implements Comparable<ContactData> {
 	private String bday;
 	private String bmonth;
 	private String byear;
-	private GroupData group;
+	private String group;
 	private String address2;
 	private String phone2;
 
@@ -22,7 +22,7 @@ public class ContactData implements Comparable<ContactData> {
 	}
 
 	public ContactData(String firstname, String lastname, String address, String home, String mobile, String work,
-			String email, String email2, String bday, String bmonth, String byear, GroupData group, String address2,
+			String email, String email2, String bday, String bmonth, String byear, String group, String address2,
 			String phone2) {
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -157,8 +157,8 @@ public class ContactData implements Comparable<ContactData> {
 		return this;
 	}
 
-	public ContactData withGroup(GroupData group) {
-		this.group = group;
+	public ContactData withGroup(String groupname) {
+		this.group = groupname;
 		return this;
 	}
 
@@ -206,7 +206,7 @@ public class ContactData implements Comparable<ContactData> {
 		return byear;
 	}
 
-	public GroupData getGroup() {
+	public String getGroup() {
 		return group;
 	}
 

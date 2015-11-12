@@ -1,20 +1,29 @@
 package com.example.tests;
 
+import static com.example.tests.ContactDataGenerator.loadContactsFromCsvFile;
+import static com.example.tests.ContactDataGenerator.loadContactsFromXmlFile;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
+import java.util.Iterator;
 
-import static org.hamcrest.Matchers.*;
-
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.example.utils.ListOf;
 
-@Test
 public class ContactCreationTests extends TestBase {
 
-	@Test(dataProvider = "randomvalidContactGenerator")
-	public void testContactCreationwithValidData(ContactData contact) throws Exception {
+	@DataProvider
+	public Iterator<Object[]> contactsFromFile() throws IOException {
+		return wrapContactsForDataProvider(loadContactsFromCsvFile(new File("contacts.txt"))).iterator();
+	}
+
+	@Test(dataProvider = "contactsFromFile")
+	public void testContactCreationWithValidData(ContactData contact) throws Exception {
 
 		// save old state
 
